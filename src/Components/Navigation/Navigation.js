@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetBillingsQuery } from '../../Redux/Featurse/Billings/BillingsApi';
-import {  useLogoutMutation } from '../../Redux/Featurse/Users/UserApi/userApi';
+import { useLogoutMutation } from '../../Redux/Featurse/Users/UserApi/userApi';
 import { removeAccessTokenAndUser } from '../../Redux/Featurse/Users/UserSlice/UserSlice';
 import Logo from '../Images/billing-icon-5.png'
 const Navigation = () => {
@@ -21,13 +21,19 @@ const Navigation = () => {
 
         logout(user.email)
             .then(res => {
-              
-                   if (res?.data?.result?.matchedCount) {
+
+                if (res?.data?.result?.matchedCount) {
                     dispatch(removeAccessTokenAndUser())
-                   }
-           } )
+                }
+            })
 
     }
+    const totalPaid = GetBillings?.result?.billing;
+
+    const totalReducer = (previous, totalPaid) => previous + totalPaid?.paidAmount;
+    const total = totalPaid?.reduce(totalReducer, 0);
+
+
     return (
         <nav className=' bg-slate-500 py-5 '>
             <div className=' lg:px-24 md:px-16 sm:px-12 px-10'>
@@ -36,10 +42,10 @@ const Navigation = () => {
                         <img className=' h-10' src={Logo} alt="" />
                     </div>
                     <div className=' text-slate-50 font-bold flex '>
-                        <h3>Paid Total: {GetBillings?.result?.total}</h3>
+                        <h3>Paid Total: {total}</h3>
 
-                         {
-                           user?.active ?
+                        {
+                            user?.active ?
                                 <button className=' ml-5' onClick={handleLogout}>Logout</button> :
                                 <button className=' ml-5' >Login</button>
 

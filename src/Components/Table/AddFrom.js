@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useAddBillingsMutation } from '../../Redux/Featurse/Billings/BillingsApi';
 import { Alert } from '../Alert/Alert';
 
-const AddFrom = () => {
+const AddFrom = ({setShowModalAdd}) => {
 
     const { register, handleSubmit, reset } = useForm();
 
@@ -12,6 +12,7 @@ const AddFrom = () => {
     const handleAddBilling = (data) => {
         addBilling(data)
         reset()
+        
     }
 
 
@@ -22,11 +23,11 @@ const AddFrom = () => {
         }
         if (isSuccess) {
             Alert({ title: 'Add Successfully', type: 'success' })
-
+            setShowModalAdd(false)
 
         }
 
-    }, [isError, isSuccess, reset]);
+    }, [isError, isSuccess, reset,setShowModalAdd]);
 
 
     return (

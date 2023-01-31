@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Pagination from "react-custom-pagination";
 import { useDeleteBillingsMutation, useGetBillingsQuery, useGetSingleBillingsQuery } from '../../Redux/Featurse/Billings/BillingsApi';
-
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import Modal from '../Modal/Modal';
 
 
@@ -56,9 +56,10 @@ const Table = () => {
     }, [isError, isSuccess, isLoading, isErrorGeltBillings]);
 
 
-    const paginate = (number) => {
-        setPage(number);
-      
+    const paginate = (e, p) => {
+        setPage(p);
+
+
     };
 
 
@@ -68,7 +69,7 @@ const Table = () => {
         <span className=' flex justify-center items-center text-slate-50 gap-2'> New Add <BiBookAdd /></span>
     </button>
 
-
+    console.log();
 
     return (
         <div>
@@ -90,7 +91,7 @@ const Table = () => {
                         title='Add Billing'
                         modalOpenButton={addButtonModalOpen}>
 
-                        <AddFrom />
+                        <AddFrom setShowModalAdd={setShowModalAdd} />
                     </Modal>
                 </div>
             </nav>
@@ -167,17 +168,12 @@ const Table = () => {
                     </table>
 
                 </div>
-                <div style={{ width: "500px" }}>
-                    <Pagination
-                        totalPosts={GetBillings?.result?.total}
-                        postsPerPage={10}
-                        paginate={paginate}
-                        view={5}
-                        showLast={true}
-                        showFirst={true}
-                        showIndex={true}
-                    />
-                </div>
+                <Stack spacing={2} >
+                    <div className=' flex justify-center'>
+                        <Pagination color="secondary" className=' bg-slate-400 text-slate-50' count={5} onChange={paginate} showFirstButton showLastButton />
+                    </div>
+                </Stack>
+
             </div>}
         </div>
     );

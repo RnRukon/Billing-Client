@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdateBillingsMutation } from '../../Redux/Featurse/Billings/BillingsApi';
 import { Alert } from '../Alert/Alert';
 
-const EditFrom = ({ SingleBillingsQuery, isErrorSingleBillingsQuery, isLoadingSingleBillingsQuery }) => {
+const EditFrom = ({ SingleBillingsQuery, isErrorSingleBillingsQuery, isLoadingSingleBillingsQuery, setShowModalUpdate }) => {
 
 
 
@@ -24,17 +24,18 @@ const EditFrom = ({ SingleBillingsQuery, isErrorSingleBillingsQuery, isLoadingSi
 
     useEffect(() => {
 
-        
+
         if (isError) {
             Alert({ title: 'Server Error', type: 'error' })
         }
         if (isSuccess) {
             Alert({ title: 'Updated Successfully', type: 'success' })
             reset()
+            setShowModalUpdate(false)
 
         }
 
-    }, [isError, isSuccess, isErrorSingleBillingsQuery, reset]);
+    }, [isError, isSuccess, isErrorSingleBillingsQuery, reset, setShowModalUpdate]);
 
     return (
         <div>
