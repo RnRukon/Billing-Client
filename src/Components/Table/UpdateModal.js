@@ -2,12 +2,12 @@ import React from 'react';
 import { MdClose } from 'react-icons/md';
 import EditFrom from './EditFrom';
 
-const UpdateModal = ({ showModalUpdate, setShowModalUpdate, SingleBillingsQuery, isErrorSingleBillingsQuery, isLoadingSingleBillingsQuery }) => {
+const UpdateModal = ({ showModalUpdate, setShowModalUpdate, SingleBillingsQuery,isErrorSingleBillingsQuery,isLoadingSingleBillingsQuery }) => {
 
 
     return (
         <div>
-
+            
 
             {showModalUpdate ? (
                 <div>
@@ -28,11 +28,10 @@ const UpdateModal = ({ showModalUpdate, setShowModalUpdate, SingleBillingsQuery,
 
                                 <div className="relative p-6 flex-auto ">
 
-                                    <EditFrom
-                                        SingleBillingsQuery={SingleBillingsQuery}
-                                        isErrorSingleBillingsQuery={isErrorSingleBillingsQuery}
-                                        isLoadingSingleBillingsQuery={isLoadingSingleBillingsQuery}
-                                       
+                                    <EditFrom 
+                                    SingleBillingsQuery={SingleBillingsQuery} 
+                                    isErrorSingleBillingsQuery={isErrorSingleBillingsQuery}
+                                    isLoadingSingleBillingsQuery={isLoadingSingleBillingsQuery}
 
                                     />
 

@@ -20,7 +20,7 @@ const EditFrom = ({ SingleBillingsQuery, isErrorSingleBillingsQuery, isLoadingSi
         update(data)
     }
 
-  
+
 
     useEffect(() => {
 

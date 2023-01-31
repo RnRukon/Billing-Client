@@ -58,7 +58,7 @@ const Table = () => {
 
     const paginate = (number) => {
         setPage(number);
-
+        setShowModalUpdate(true)
     };
 
 
@@ -141,7 +141,13 @@ const Table = () => {
 
                                             <button onClick={() => handleSingleBilling(billing?._id)}>Edit</button>
 
-
+                                            <UpdateModal
+                                                showModalUpdate={showModalUpdate}
+                                                setShowModalUpdate={setShowModalUpdate}
+                                                SingleBillingsQuery={SingleBillingsQuery}
+                                                isErrorSingleBillingsQuery={isErrorSingleBillingsQuery}
+                                                isLoadingSingleBillingsQuery={isLoadingSingleBillingsQuery}
+                                            />
 
 
                                             <button
@@ -159,28 +165,20 @@ const Table = () => {
 
                         </tbody>
                     </table>
-                    <UpdateModal
-                        showModalUpdate={showModalUpdate}
-                        setShowModalUpdate={setShowModalUpdate}
-                        SingleBillingsQuery={SingleBillingsQuery}
-                        isErrorSingleBillingsQuery={isErrorSingleBillingsQuery}
-                        isLoadingSingleBillingsQuery={isLoadingSingleBillingsQuery}
+
+                </div>
+                <div style={{ width: "500px" }}>
+                    <Pagination
+                        totalPosts={GetBillings?.result?.total}
+                        postsPerPage={10}
+                        paginate={paginate}
+                        view={5}
+                        showLast={true}
+                        showFirst={true}
+                        showIndex={true}
                     />
                 </div>
-
             </div>}
-
-            <div style={{ width: "500px" }}>
-                <Pagination
-                    totalPosts={GetBillings?.result?.total}
-                    postsPerPage={10}
-                    paginate={paginate}
-                    view={5}
-                    showLast={true}
-                    showFirst={true}
-                    showIndex={true}
-                />
-            </div>
         </div>
     );
 };
