@@ -58,7 +58,7 @@ const Table = () => {
 
     const paginate = (number) => {
         setPage(number);
-        setShowModalUpdate(true)
+      
     };
 
 
