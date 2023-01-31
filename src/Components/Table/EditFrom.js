@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGetSingleBillingsQuery, useUpdateBillingsMutation } from '../../Redux/Featurse/Billings/BillingsApi';
+import { useUpdateBillingsMutation } from '../../Redux/Featurse/Billings/BillingsApi';
 import { Alert } from '../Alert/Alert';
 
-const EditFrom = ({ id }) => {
+const EditFrom = ({ SingleBillingsQuery, isErrorSingleBillingsQuery, isLoadingSingleBillingsQuery }) => {
 
-    const { data: SingleBillingsQuery, isLoading: isLoadingSingleBillingsQuery, isError: isErrorSingleBillingsQuery } = useGetSingleBillingsQuery(id);
+
 
     const { register, handleSubmit, reset } = useForm();
 
@@ -16,17 +16,15 @@ const EditFrom = ({ id }) => {
 
 
     const handleUpdateBilling = (data) => {
-        data.id = id
+        data.id = SingleBillingsQuery?.result?._id
         update(data)
     }
 
-
+  
 
     useEffect(() => {
 
-        if (isErrorSingleBillingsQuery) {
-            Alert({ title: 'Server Error', type: 'error' })
-        }
+        
         if (isError) {
             Alert({ title: 'Server Error', type: 'error' })
         }

@@ -8,10 +8,10 @@ import { Alert } from '../Alert/Alert';
 const Register = () => {
     const { register, handleSubmit, reset } = useForm();
 
-    const [userRegister] = useRegisterMutation();
+    const [userRegister, { isLoading: userRegisterIsLoading }] = useRegisterMutation();
 
 
-    const [userLogin] = useLoginMutation();
+    const [userLogin, { isLoading: userLoginLoading }] = useLoginMutation();
 
     const dispatch = useDispatch();
 
@@ -73,7 +73,11 @@ const Register = () => {
                 </div>
 
 
-                <button type="submit" className="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Register</button>
+                {userRegisterIsLoading || userLoginLoading ?
+                    <button className="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Loading...</button> :
+                    <button type="submit" className="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Register</button>
+
+                }
             </form>
         </div>
     );

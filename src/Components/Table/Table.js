@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Pagination from "react-custom-pagination";
-import { useDeleteBillingsMutation, useGetBillingsQuery } from '../../Redux/Featurse/Billings/BillingsApi';
+import { useDeleteBillingsMutation, useGetBillingsQuery, useGetSingleBillingsQuery } from '../../Redux/Featurse/Billings/BillingsApi';
 
 import Modal from '../Modal/Modal';
-import EditFrom from './EditFrom';
+
 
 import { BiBookAdd } from 'react-icons/bi'
 import AddFrom from './AddFrom';
 import { Alert } from '../Alert/Alert';
+import UpdateModal from './UpdateModal';
 
 
 const Table = () => {
@@ -16,12 +17,13 @@ const Table = () => {
     const [showModalUpdate, setShowModalUpdate] = useState(false);
     const [showModalAdd, setShowModalAdd] = useState(false);
     const [page, setPage] = useState(1);
-    const [filter, setFilter] = useState('')
+    const [filter, setFilter] = useState('');
+    const [id, setId] = useState('');
 
     const { data: GetBillings, isLoading: isLoadingGetBillings, isError: isErrorGeltBillings } = useGetBillingsQuery(page);
 
 
-    const [handleDelete, { isError, isLoading, isSuccess, }] = useDeleteBillingsMutation()
+    const [handleDelete, { isError, isLoading, isSuccess }] = useDeleteBillingsMutation()
 
     // filter for searching 
     const filterBilling = GetBillings?.result?.billing?.filter(billing =>
@@ -30,9 +32,14 @@ const Table = () => {
         billing.fullName.includes(filter) ||
         billing._id.includes(filter)
     )
+    const { data: SingleBillingsQuery, isLoading: isLoadingSingleBillingsQuery, isSuccess: isErrorSingleBillingsQuery } = useGetSingleBillingsQuery(id);
 
 
 
+    const handleSingleBilling = (id) => {
+        setId(id);
+        setShowModalUpdate(true);
+    }
 
 
     useEffect(() => {
@@ -51,15 +58,12 @@ const Table = () => {
 
     const paginate = (number) => {
         setPage(number);
+
     };
 
 
 
-    const editButtonModalOpen = <button onClick={() => setShowModalUpdate(true)} className="p-5" >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-        </svg>
-    </button>
+
     const addButtonModalOpen = <button onClick={() => setShowModalAdd(true)} className="p-5" >
         <span className=' flex justify-center items-center text-slate-50 gap-2'> New Add <BiBookAdd /></span>
     </button>
@@ -113,7 +117,8 @@ const Table = () => {
 
                             {filterBilling?.map((billing) => (
 
-                                <tr key={billing?._id} className="hover:bg-gray-50">
+                                <tr key={billing?._id}
+                                    className="hover:bg-gray-50">
                                     <th className="flex gap-3 px-6 py-4 font-normal text-gray-900">
                                         {billing._id}
                                     </th>
@@ -133,14 +138,10 @@ const Table = () => {
                                     <td className="px-6 py-4">
                                         <div className=" flex justify-end">
 
-                                            <Modal
-                                                showModal={showModalUpdate}
-                                                setShowModal={setShowModalUpdate}
-                                                title='Update Billing'
-                                                modalOpenButton={editButtonModalOpen}>
 
-                                                <EditFrom id={billing._id} />
-                                            </Modal>
+                                            <button onClick={() => handleSingleBilling(billing?._id)}>Edit</button>
+
+
 
 
                                             <button
@@ -158,20 +159,28 @@ const Table = () => {
 
                         </tbody>
                     </table>
-
-                </div>
-                <div style={{ width: "500px" }}>
-                    <Pagination
-                        totalPosts={GetBillings?.result?.total}
-                        postsPerPage={10}
-                        paginate={paginate}
-                        view={5}
-                        showLast={true}
-                        showFirst={true}
-                        showIndex={true}
+                    <UpdateModal
+                        showModalUpdate={showModalUpdate}
+                        setShowModalUpdate={setShowModalUpdate}
+                        SingleBillingsQuery={SingleBillingsQuery}
+                        isErrorSingleBillingsQuery={isErrorSingleBillingsQuery}
+                        isLoadingSingleBillingsQuery={isLoadingSingleBillingsQuery}
                     />
                 </div>
+
             </div>}
+
+            <div style={{ width: "500px" }}>
+                <Pagination
+                    totalPosts={GetBillings?.result?.total}
+                    postsPerPage={10}
+                    paginate={paginate}
+                    view={5}
+                    showLast={true}
+                    showFirst={true}
+                    showIndex={true}
+                />
+            </div>
         </div>
     );
 };

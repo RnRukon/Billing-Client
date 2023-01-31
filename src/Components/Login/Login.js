@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { useLoginMutation } from '../../Redux/Featurse/Users/UserApi/userApi';
 import { setAccessTokenAndUser } from '../../Redux/Featurse/Users/UserSlice/UserSlice';
+import { Alert } from '../Alert/Alert';
 
 
 const Login = () => {
@@ -22,6 +23,7 @@ const Login = () => {
                 sessionStorage.setItem('user', user)
                 dispatch(setAccessTokenAndUser());
                 reset()
+                Alert({ title: 'Login Successfully', type: 'success' })
             })
     }
 

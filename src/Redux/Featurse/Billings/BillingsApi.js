@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const billingsApi = createApi({
     reducerPath: 'billingsApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://billing-server.onrender.com/api' }),
     tagTypes: ['Billings'],
     endpoints: (builder) => ({
         getBillings: builder.query({
