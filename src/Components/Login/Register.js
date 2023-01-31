@@ -31,8 +31,8 @@ const Register = () => {
                         .then(res => {
                             const token = res?.data?.result?.access_token || null;
                             const user = JSON.stringify(res?.data?.result?.user) || null;
-                            sessionStorage.setItem('accessToken', token)
-                            sessionStorage.setItem('user', user)
+                            localStorage.setItem('accessToken', token)
+                            localStorage.setItem('user', user)
                             dispatch(setAccessTokenAndUser());
                             reset()
                             Alert({ title: 'Login Successfully', type: 'success' })

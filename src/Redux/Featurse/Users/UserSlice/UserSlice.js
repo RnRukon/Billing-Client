@@ -16,8 +16,8 @@ export const userSlice = createSlice({
     reducers: {
         setAccessTokenAndUser: (state, action) => {
             state.isLoading = true;
-            const getToken = sessionStorage?.getItem("accessToken");
-            const getUser = sessionStorage?.getItem("user");
+            const getToken = localStorage?.getItem("accessToken");
+            const getUser = localStorage?.getItem("user");
             state.accessToken = getToken;
             state.user = JSON?.parse(getUser);
             state.isLoading = false;
@@ -26,8 +26,8 @@ export const userSlice = createSlice({
             state.isLoading = true;
             state.accessToken = null;
             state.user = {};
-            sessionStorage?.setItem("accessToken", null);
-            sessionStorage?.setItem("user", null);
+            localStorage?.setItem("accessToken", null);
+            localStorage?.setItem("user", null);
             state.isLoading = false;
         },
 

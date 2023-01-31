@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdateBillingsMutation } from '../../Redux/Featurse/Billings/BillingsApi';
+import { useGetSingleBillingsQuery, useUpdateBillingsMutation } from '../../Redux/Featurse/Billings/BillingsApi';
 import { Alert } from '../Alert/Alert';
 
-const EditFrom = ({ SingleBillingsQuery, isErrorSingleBillingsQuery, isLoadingSingleBillingsQuery, setShowModalUpdate }) => {
+const EditFrom = ({setShowModalUpdate,id }) => {
 
-
+    const { data: SingleBillingsQuery, isLoading: isLoadingSingleBillingsQuery, isSuccess: isErrorSingleBillingsQuery } = useGetSingleBillingsQuery(id);
 
     const { register, handleSubmit, reset } = useForm();
 
 
 
     const [update, { isError, isLoading, isSuccess }] = useUpdateBillingsMutation();
-
 
 
     const handleUpdateBilling = (data) => {
@@ -39,7 +38,7 @@ const EditFrom = ({ SingleBillingsQuery, isErrorSingleBillingsQuery, isLoadingSi
 
     return (
         <div>
-            {!isLoadingSingleBillingsQuery &&
+            {isLoadingSingleBillingsQuery?<p >Loading...</p>:
                 <form onSubmit={handleSubmit(handleUpdateBilling)}>
                     <div className="mb-2">
                         <label className="block mb-2 text-sm font-medium text-gray-900 ">Full Name</label>
@@ -77,7 +76,7 @@ const EditFrom = ({ SingleBillingsQuery, isErrorSingleBillingsQuery, isLoadingSi
                     <div className=' flex justify-end'>
                         {
                             isLoading ?
-                                <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  w-52">Loading...</button> :
+                                <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5   w-52">Loading...</button> :
                                 <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  w-52">Submit</button>
 
                         }

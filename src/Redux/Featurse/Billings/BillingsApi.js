@@ -8,7 +8,7 @@ export const billingsApi = createApi({
     endpoints: (builder) => ({
         getBillings: builder.query({
             query: (page) => ({
-                headers: { 'Authorization': `Bearer ${sessionStorage?.getItem("accessToken")}` },
+                headers: { 'Authorization': `Bearer ${localStorage?.getItem("accessToken")}` },
                 url: `/billing-list?page=${page}&limit=10`,
             }),
             providesTags: ['Billings']
@@ -18,7 +18,7 @@ export const billingsApi = createApi({
         getSingleBillings: builder.query({
             query: (id) => ({
                 url: `/billing-single/${id}`,
-                headers: { 'Authorization': `Bearer ${sessionStorage?.getItem("accessToken")}` },
+                headers: { 'Authorization': `Bearer ${localStorage?.getItem("accessToken")}` },
             }),
             providesTags: ['Billings']
         }),
@@ -28,7 +28,7 @@ export const billingsApi = createApi({
             query: (data) => ({
                 url: '/add-billing',
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${sessionStorage?.getItem("accessToken")}` },
+                headers: { 'Authorization': `Bearer ${localStorage?.getItem("accessToken")}` },
                 body: data,
             }),
             invalidatesTags: ['Billings']
@@ -38,7 +38,7 @@ export const billingsApi = createApi({
             query: (id) => ({
                 url: `/delete-billing/${id}`,
                 method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${sessionStorage?.getItem("accessToken")}` },
+                headers: { 'Authorization': `Bearer ${localStorage?.getItem("accessToken")}` },
             }),
             invalidatesTags: ['Billings']
         }),
@@ -47,7 +47,7 @@ export const billingsApi = createApi({
             query: ({ fullName, email, phone, paidAmount, id, }) => ({
                 url: `/update-billing/${id}`,
                 method: 'PATCH',
-                headers: { 'Authorization': `Bearer ${sessionStorage?.getItem("accessToken")}` },
+                headers: { 'Authorization': `Bearer ${localStorage?.getItem("accessToken")}` },
                 body: { fullName, email, phone, paidAmount },
             }),
             invalidatesTags: ['Billings']

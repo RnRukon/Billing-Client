@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDeleteBillingsMutation, useGetBillingsQuery, useGetSingleBillingsQuery } from '../../Redux/Featurse/Billings/BillingsApi';
+import { useDeleteBillingsMutation, useGetBillingsQuery } from '../../Redux/Featurse/Billings/BillingsApi';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Modal from '../Modal/Modal';
@@ -19,6 +19,7 @@ const Table = () => {
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('');
     const [id, setId] = useState('');
+    
 
     const { data: GetBillings, isLoading: isLoadingGetBillings, isError: isErrorGeltBillings } = useGetBillingsQuery(page);
 
@@ -32,12 +33,14 @@ const Table = () => {
         billing.fullName.includes(filter) ||
         billing._id.includes(filter)
     )
-    const { data: SingleBillingsQuery, isLoading: isLoadingSingleBillingsQuery, isSuccess: isErrorSingleBillingsQuery } = useGetSingleBillingsQuery(id);
+   
+
+ 
 
 
-
+ 
     const handleSingleBilling = (id) => {
-        setId(id);
+        setId(id)
         setShowModalUpdate(true);
     }
 
@@ -145,9 +148,8 @@ const Table = () => {
                                             <UpdateModal
                                                 showModalUpdate={showModalUpdate}
                                                 setShowModalUpdate={setShowModalUpdate}
-                                                SingleBillingsQuery={SingleBillingsQuery}
-                                                isErrorSingleBillingsQuery={isErrorSingleBillingsQuery}
-                                                isLoadingSingleBillingsQuery={isLoadingSingleBillingsQuery}
+                                               
+                                                id={id}
                                             />
 
 
