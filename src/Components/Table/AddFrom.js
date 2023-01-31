@@ -11,6 +11,7 @@ const AddFrom = () => {
 
     const handleAddBilling = (data) => {
         addBilling(data)
+        reset()
     }
 
 
@@ -21,13 +22,13 @@ const AddFrom = () => {
         }
         if (isSuccess) {
             Alert({ title: 'Add Successfully', type: 'success' })
-            reset()
+
 
         }
 
     }, [isError, isSuccess, reset]);
 
-    
+
     return (
         <div>
             <form onSubmit={handleSubmit(handleAddBilling)}>
@@ -49,7 +50,7 @@ const AddFrom = () => {
                 </div>
                 <div className="mb-2">
                     <label className="block mb-2 text-sm font-medium text-gray-900 ">Phone</label>
-                    <input type="phone" id="phone"
+                    <input type="tel" id="phone"
 
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Phone" required
                         {...register("phone")}
