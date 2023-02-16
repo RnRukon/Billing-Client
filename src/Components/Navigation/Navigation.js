@@ -1,21 +1,20 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetBillingsQuery } from '../../Redux/Featurse/Billings/BillingsApi';
-import { useLogoutMutation } from '../../Redux/Featurse/Users/UserApi/userApi';
+import { useGetMeQuery, useLogoutMutation } from '../../Redux/Featurse/Users/UserApi/userApi';
 import { removeAccessTokenAndUser } from '../../Redux/Featurse/Users/UserSlice/UserSlice';
 import Logo from '../Images/billing-icon-5.png'
 const Navigation = () => {
 
+    const user = useSelector(sate => sate?.users?.user)
 
     const { data: GetBillings } = useGetBillingsQuery();
-
+    const { data, isLoading } = useGetMeQuery(user?.email);
 
     const [logout] = useLogoutMutation();
     const dispatch = useDispatch();
 
-    const user = useSelector(sate => sate?.users?.user)
 
-    // console.log(user);
 
 
     const handleLogout = () => {
@@ -44,10 +43,13 @@ const Navigation = () => {
                     </div>
                     <div className=' text-slate-50 font-bold flex '>
                         <h3>Paid Total: {total}</h3>
-
                         {
-                            user?.active ?
-                                <button className=' ml-5' onClick={handleLogout}>Logout</button> :
+                            isLoading && <button className=' ml-5' >Loading...</button>
+                        }
+                        {
+                            data?.result?.email ?
+                                <button className=' ml-5'
+                                    onClick={handleLogout}>Logout</button> :
                                 <button className=' ml-5' >Login</button>
 
                         }

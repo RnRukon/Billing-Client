@@ -10,8 +10,8 @@ const PrivateRoute = ({ children }) => {
     const users = useSelector(sate => sate?.users);
 
 
-    const { isLoading } = useGetMeQuery(users?.user?.email);
-
+    const { data, isLoading } = useGetMeQuery(users?.user?.email);
+  
 
 
     if (isLoading) {
@@ -19,7 +19,7 @@ const PrivateRoute = ({ children }) => {
             <p>Loading...</p>
         </div>
     }
-    if (!users?.user?.active) {
+    if (!data?.result?.email) {
         return <LoginLayout />
     } else {
 
