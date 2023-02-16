@@ -15,6 +15,7 @@ const Navigation = () => {
 
     const user = useSelector(sate => sate?.users?.user)
 
+    // console.log(user);
 
 
     const handleLogout = () => {

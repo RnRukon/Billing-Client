@@ -5,13 +5,14 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const userApi = createApi({
     reducerPath: 'usersApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://billing-server.onrender.com/api' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api' }),
     tagTypes: ['User'],
     endpoints: (builder) => ({
 
 
         getMe: builder.query({
             query: (email) => ({
+                headers: { 'Authorization': `Bearer ${localStorage?.getItem("accessToken")}` },
                 url: `/get-me/${email}`
             }),
             invalidatesTags: ['User']

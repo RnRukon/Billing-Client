@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
@@ -10,8 +10,23 @@ import { Alert } from '../Alert/Alert';
 const Login = () => {
 
     const { register, handleSubmit, reset } = useForm();
-    const [userLogin] = useLoginMutation()
+    const [userLogin, { isSuccess, isError }] = useLoginMutation()
     const dispatch = useDispatch();
+
+
+    
+    useEffect(() => {
+        if (isSuccess) {
+            Alert({ title: 'Login Successfully', type: 'success' })
+        } if (isError) {
+            Alert({ title: 'Something error', type: 'error' })
+        }
+    }, [isSuccess, isError]);
+
+
+
+   
+
 
 
     const handleSignIn = (data) => {
@@ -23,7 +38,7 @@ const Login = () => {
                 localStorage.setItem('user', user)
                 dispatch(setAccessTokenAndUser());
                 reset()
-                Alert({ title: 'Login Successfully', type: 'success' })
+
             })
     }
 

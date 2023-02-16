@@ -21,6 +21,7 @@ export const userSlice = createSlice({
             state.accessToken = getToken;
             state.user = JSON?.parse(getUser);
             state.isLoading = false;
+            
         },
         removeAccessTokenAndUser: (state, action) => {
             state.isLoading = true;
